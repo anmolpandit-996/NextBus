@@ -80,6 +80,7 @@ searchForm.addEventListener("submit", (event) => {
 });
 
 streetOptionsEle.addEventListener("click", (event) => {
+  event.preventDefault();
   let streetKey = event.target.getAttribute("data-street-key");
   getStops(streetKey).then((data) => {
     const scheduleArray = [];
