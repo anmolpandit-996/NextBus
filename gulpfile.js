@@ -30,7 +30,7 @@ function styles() {
 function scripts() {
   return src(["src/scripts/app.js"])
     .pipe(sourcemaps.init())
-    .pipe(concat("scripts/bundle.js"))
+    .pipe(concat("bundle.js"))
     .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(dest("dist/scripts/"));
