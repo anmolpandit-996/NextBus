@@ -10,7 +10,7 @@ const searchStreet = async (streetName) => {
   const request = await fetch(`${streetUrl}&name=${streetName}`);
   const data = await request.json();
   if(!Response.ok){
-    titleBarEle .innerHTML =`No such street found`;  
+    titleBarEle .innerHTML =`<div class="no-results">No Streets found</div>`;  
   }
   return data.streets;
   
@@ -48,6 +48,7 @@ const renderSchedule = (scheduleArray) => {
   scheduleTBody[0].innerHTML = "";
 
   for (let schedule of scheduleArray) {
+    if(schedule["stop-schedule"]["route-schedules"].length!==0){
     const busDetailedTime =
       schedule["stop-schedule"]["route-schedules"][0]["scheduled-stops"][0][
         "times"
@@ -67,12 +68,15 @@ const renderSchedule = (scheduleArray) => {
     <td>${busTime}</td>
   </tr>
     `;
+  }else{
+    titleBarEle .innerHTML =`Sorry for the inconvenience, no schedule available for now`; 
   }
+}
 };
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  searchStreet(event.target[0].value).then((data) => {
+  searchStreet(event.target[0].value).then((data) => { 
     renderStreetsNameHTML(data);
     
   });
@@ -92,8 +96,6 @@ streetOptionsEle.addEventListener("click", (event) => {
       renderTitleBar(data);
       renderSchedule(schedules);
       
-     }else{
-        alert('Sorry for the inconvenience, no schedule available for now ');
      }
     });
   });
